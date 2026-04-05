@@ -371,6 +371,84 @@ export const Documentation: React.FC = () => {
       ]
     },
     {
+      id: 'clean-code',
+      title: 'Clean Code & Best Practices',
+      icon: <ShieldCheck className="w-5 h-5 text-blue-400" />,
+      content: [
+        {
+          id: 'naming-rules',
+          label: 'Naming Conventions',
+          desc: 'Quy tắc đặt tên biến, hàm, lớp chuẩn Clean Code.',
+          example: '// Bad\nint d; // elapsed time in days\n\n// Good\nint elapsedTimeInDays;\nint daysSinceCreation;',
+          details: {
+            overview: 'Đặt tên là một trong những việc khó nhất và quan trọng nhất trong lập trình. Tên tốt giúp code tự giải thích (Self-documenting) mà không cần comment.',
+            points: [
+              'Intention-Revealing: Tên phải thể hiện được mục đích (Tại sao nó tồn tại? Nó làm gì?).',
+              'Avoid Disinformation: Tránh dùng các từ gây hiểu lầm (ví dụ: accountList nhưng thực tế là một Map).',
+              'Pronounceable: Tên phải đọc được bằng lời để dễ thảo luận với đồng nghiệp.',
+              'Searchable: Tránh dùng các tên 1 ký tự (trừ vòng lặp cực ngắn).'
+            ],
+            bestPractices: [
+              'Class: Danh từ hoặc cụm danh từ (Customer, AccountParser).',
+              'Method: Động từ hoặc cụm động từ (save, deletePage).',
+              'Constant: VIẾT_HOA_CÁCH_NHAU_BỞI_DẤU_GẠCH_DƯỚI (MAX_RETRY_COUNT).',
+              'Boolean: Dùng tiền tố is, has, can (isAuthorized, hasAccess).'
+            ]
+          }
+        },
+        {
+          id: 'solid-principles',
+          label: 'SOLID Principles',
+          desc: '5 nguyên lý thiết kế hướng đối tượng giúp code linh hoạt và dễ bảo trì.',
+          example: '// Dependency Inversion Example\npublic class BankService {\n    private final PaymentProcessor processor; // Interface, not implementation\n    public BankService(PaymentProcessor p) { this.processor = p; }\n}',
+          details: {
+            overview: 'SOLID là bộ quy tắc vàng giúp lập trình viên tránh được "code thối" (code smell) và xây dựng các hệ thống có khả năng mở rộng cực tốt.',
+            points: [
+              'Single Responsibility: Một class chỉ nên có một lý do duy nhất để thay đổi.',
+              'Open/Closed: Class nên mở để mở rộng (extension) nhưng đóng để sửa đổi (modification).',
+              'Liskov Substitution: Lớp con phải có thể thay thế lớp cha mà không làm hỏng chương trình.',
+              'Interface Segregation: Thà dùng nhiều interface nhỏ, chuyên biệt còn hơn một interface lớn dư thừa.',
+              'Dependency Inversion: Phụ thuộc vào Abstraction (Interface), không phụ thuộc vào Implementation (Class cụ thể).'
+            ],
+            bestPractices: [
+              'Luôn lập trình với Interface thay vì Class cụ thể.',
+              'Sử dụng Composition thay vì Inheritance khi có thể.',
+              'Tách biệt logic nghiệp vụ khỏi logic hạ tầng (ví dụ: DB, API).'
+            ],
+            infographic: {
+              type: 'comparison',
+              data: {
+                items: [
+                  { title: 'Bad Design', features: ['Cứng nhắc (Rigidity)', 'Dễ vỡ (Fragility)', 'Khó tái sử dụng (Immobility)'] },
+                  { title: 'SOLID Design', features: ['Linh hoạt (Flexibility)', 'Dễ kiểm thử (Testability)', 'Dễ bảo trì (Maintainability)'] }
+                ]
+              }
+            }
+          }
+        },
+        {
+          id: 'design-patterns',
+          label: 'Design Patterns',
+          desc: 'Các giải pháp mẫu cho các vấn đề phổ biến trong thiết kế phần mềm.',
+          example: '// Singleton Pattern\npublic class DatabaseConnection {\n    private static DatabaseConnection instance;\n    private DatabaseConnection() {}\n    public static synchronized DatabaseConnection getInstance() {\n        if (instance == null) instance = new DatabaseConnection();\n        return instance;\n    }\n}',
+          details: {
+            overview: 'Design Patterns là các "công thức" đã được kiểm chứng để giải quyết các vấn đề thiết kế phần mềm lặp đi lặp lại. Chúng giúp lập trình viên giao tiếp với nhau hiệu quả hơn qua các tên gọi chuẩn.',
+            points: [
+              'Creational: Cách khởi tạo đối tượng (Singleton, Factory, Builder).',
+              'Structural: Cách tổ chức các class và đối tượng (Adapter, Proxy, Facade).',
+              'Behavioral: Cách các đối tượng tương tác với nhau (Observer, Strategy, State).',
+              'Builder Pattern: Cực kỳ hữu ích khi tạo các đối tượng phức tạp với nhiều tham số.'
+            ],
+            bestPractices: [
+              'Đừng lạm dụng Design Patterns (Over-engineering). Chỉ dùng khi thực sự cần thiết.',
+              'Hiểu rõ vấn đề trước khi chọn pattern, không nên cố ép code vào một pattern nào đó.',
+              'Kết hợp các pattern với nhau để tạo ra kiến trúc linh hoạt.'
+            ]
+          }
+        }
+      ]
+    },
+    {
       id: 'spring-cloud',
       title: 'Spring & System Design',
       icon: <ShieldCheck className="w-5 h-5 text-emerald-500" />,
@@ -396,22 +474,29 @@ export const Documentation: React.FC = () => {
         },
         {
           id: 'system-design',
-          label: 'System Design',
-          desc: 'Microservices, Docker, Kafka và Redis.',
-          example: 'services:\n  banking-app:\n    image: nab/banking:latest\n    ports: ["8080:8080"]',
+          label: 'System Design Advanced',
+          desc: 'Kiến trúc hệ thống, Scalability và Reliability.',
+          example: '// Load Balancer -> Service A (Instance 1, 2, 3) -> Database Cluster',
           details: {
-            overview: 'Thiết kế hệ thống quy mô lớn cho ngân hàng đòi hỏi tính sẵn sàng cao (High Availability) và khả năng mở rộng (Scalability).',
+            overview: 'Thiết kế hệ thống quy mô lớn (như hệ thống lõi của NAB) đòi hỏi sự cân bằng giữa hiệu năng, chi phí và độ tin cậy.',
             points: [
-              'Microservices: Chia nhỏ hệ thống thành các dịch vụ độc lập để dễ phát triển và triển khai.',
-              'Docker: Đảm bảo ứng dụng chạy giống hệt nhau trên máy dev và trên server NAB.',
-              'Kafka: Message Queue cho xử lý bất đồng bộ và tin cậy.',
-              'Redis: Bộ nhớ đệm (Cache) giúp giảm tải cho Database và tăng tốc độ phản hồi.'
+              'Scalability: Khả năng mở rộng theo chiều ngang (Horizontal) bằng cách thêm nhiều server.',
+              'Availability: Đảm bảo hệ thống luôn hoạt động (99.99% uptime) thông qua Redundancy.',
+              'CAP Theorem: Sự đánh đổi giữa Consistency (Nhất quán), Availability (Sẵn sàng) và Partition Tolerance (Chịu lỗi phân mảnh).',
+              'Load Balancing: Phân phối lưu lượng truy cập đều cho các server để tránh quá tải.'
             ],
             bestPractices: [
-              'Thiết kế database riêng biệt cho mỗi service (Database per Service).',
-              'Sử dụng Circuit Breaker (như Resilience4j) để ngăn lỗi lan truyền giữa các service.',
-              'Luôn có hệ thống Logging và Monitoring tập trung (như ELK Stack hoặc Prometheus).'
-            ]
+              'Dùng Caching (Redis) cho các dữ liệu ít thay đổi nhưng truy cập nhiều.',
+              'Sử dụng Database Sharding hoặc Replication để xử lý lượng dữ liệu khổng lồ.',
+              'Áp dụng Microservices để tách biệt các domain nghiệp vụ (Payment, User, Card).',
+              'Thiết kế hệ thống theo hướng Event-Driven (Kafka) để tăng tính linh hoạt.'
+            ],
+            infographic: {
+              type: 'flow',
+              data: {
+                steps: ['User Request', 'Load Balancer', 'API Gateway', 'Microservice', 'Cache/DB']
+              }
+            }
           }
         }
       ]
