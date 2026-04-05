@@ -4,6 +4,7 @@ export interface Task {
   level: TaskLevel;
   description: string;
   example?: string;
+  hint?: string;
 }
 
 export interface Module {

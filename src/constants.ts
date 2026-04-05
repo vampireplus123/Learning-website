@@ -28,34 +28,40 @@ Sử dụng \`if-else\` và \`switch-case\` để phân luồng giao dịch.
           {
             level: 'easy',
             description: "[LeetCode 1] Two Sum: Cho một mảng số nguyên và một số mục tiêu, tìm chỉ số của hai số sao cho tổng của chúng bằng mục tiêu.",
-            example: "Input: nums = [2,7,11,15], target = 9 -> Output: [0,1]"
+            example: "Input: nums = [2,7,11,15], target = 9 -> Output: [0,1]",
+            hint: "Sử dụng HashMap để lưu trữ giá trị đã duyệt qua và chỉ số của nó để tìm kiếm phần bù (target - nums[i]) trong O(1)."
           },
           {
             level: 'medium',
             description: "[LeetCode 15] 3Sum: Tìm tất cả các bộ ba số trong mảng có tổng bằng 0.",
-            example: "Input: nums = [-1,0,1,2,-1,-4] -> Output: [[-1,-1,2],[-1,0,1]]"
+            example: "Input: nums = [-1,0,1,2,-1,-4] -> Output: [[-1,-1,2],[-1,0,1]]",
+            hint: "Sắp xếp mảng trước, sau đó sử dụng kỹ thuật hai con trỏ (Two Pointers) để tìm hai số còn lại sau khi đã cố định một số."
           },
           {
             level: 'hard',
             description: "[LeetCode 4] Median of Two Sorted Arrays: Tìm trung vị của hai mảng đã sắp xếp.",
-            example: "Input: nums1 = [1,3], nums2 = [2] -> Output: 2.0"
+            example: "Input: nums1 = [1,3], nums2 = [2] -> Output: 2.0",
+            hint: "Sử dụng tìm kiếm nhị phân (Binary Search) trên mảng nhỏ hơn để tìm điểm chia sao cho hai nửa có số lượng phần tử bằng nhau."
           }
         ],
         projectTasks: [
           {
             level: 'easy',
             description: "Khởi tạo các biến cơ bản cho hệ thống Bank: bankName, branchCode, interestRate.",
-            example: "String bankName = \"NAB Digital\"; double interestRate = 0.05;"
+            example: "String bankName = \"NAB Digital\"; double interestRate = 0.05;",
+            hint: "Sử dụng kiểu String cho tên và mã, double hoặc BigDecimal cho lãi suất."
           },
           {
             level: 'medium',
             description: "Xây dựng logic tính lãi suất tiết kiệm sử dụng BigDecimal với RoundingMode.HALF_UP.",
-            example: "BigDecimal balance = new BigDecimal(\"1000.50\");"
+            example: "BigDecimal balance = new BigDecimal(\"1000.50\");",
+            hint: "Dùng phương thức multiply() của BigDecimal và setScale(2, RoundingMode.HALF_UP) để làm tròn."
           },
           {
             level: 'hard',
             description: "Thiết kế hệ thống quản lý cấu hình ngân hàng đa chi nhánh, hỗ trợ thay đổi lãi suất theo vùng.",
-            example: "Map<String, BigDecimal> regionalRates = new HashMap<>();"
+            example: "Map<String, BigDecimal> regionalRates = new HashMap<>();",
+            hint: "Sử dụng Map với key là mã vùng (String) và value là lãi suất (BigDecimal)."
           }
         ],
         projectExplanation: "Bài tập này giúp bạn làm quen với việc khai báo các thông số cấu hình cơ bản của một hệ thống ngân hàng. Đây là những giá trị ít thay đổi nhưng cực kỳ quan trọng.",
@@ -87,34 +93,40 @@ Cho phép một đối tượng thực hiện các hành động khác nhau.
           {
             level: 'easy',
             description: "[LeetCode 20] Valid Parentheses: Kiểm tra xem một chuỗi chứa các ký tự '(', ')', '{', '}', '[' và ']' có hợp lệ hay không.",
-            example: "Input: s = \"()[]{}\" -> Output: true"
+            example: "Input: s = \"()[]{}\" -> Output: true",
+            hint: "Sử dụng Stack để lưu các dấu ngoặc mở. Khi gặp dấu ngoặc đóng, kiểm tra xem nó có khớp với dấu ngoặc ở đỉnh Stack không."
           },
           {
             level: 'medium',
             description: "[LeetCode 22] Generate Parentheses: Tạo tất cả các tổ hợp ngoặc hợp lệ từ n cặp ngoặc.",
-            example: "Input: n = 3 -> Output: [\"((()))\",\"(()())\",\"(())()\",\"()(())\",\"()()()\"]"
+            example: "Input: n = 3 -> Output: [\"((()))\",\"(()())\",\"(())()\",\"()(())\",\"()()()\"]",
+            hint: "Sử dụng đệ quy (Backtracking). Theo dõi số lượng ngoặc mở và đóng đã sử dụng để đảm bảo tính hợp lệ."
           },
           {
             level: 'hard',
             description: "[LeetCode 32] Longest Valid Parentheses: Tìm độ dài của chuỗi ngoặc hợp lệ dài nhất.",
-            example: "Input: s = \")()())\" -> Output: 4"
+            example: "Input: s = \")()())\" -> Output: 4",
+            hint: "Sử dụng Stack để lưu chỉ số (index) của các dấu ngoặc, hoặc sử dụng Quy hoạch động (Dynamic Programming)."
           }
         ],
         projectTasks: [
           {
             level: 'easy',
             description: "Tạo Class Account và Customer, quản lý bằng mảng đơn giản.",
-            example: "Customer[] customers = new Customer[10];"
+            example: "Customer[] customers = new Customer[10];",
+            hint: "Định nghĩa các thuộc tính private và các phương thức getter/setter."
           },
           {
             level: 'medium',
             description: "Triển khai tính kế thừa cho SavingsAccount và CurrentAccount với logic rút tiền khác nhau.",
-            example: "class SavingsAccount extends Account { ... }"
+            example: "class SavingsAccount extends Account { ... }",
+            hint: "Sử dụng từ khóa extends và ghi đè (override) phương thức withdraw()."
           },
           {
             level: 'hard',
             description: "Xây dựng hệ thống quản lý tài khoản đa cấp với Interface và Abstract Class, hỗ trợ nhiều loại tiền tệ.",
-            example: "abstract class BaseAccount implements IAccount { ... }"
+            example: "abstract class BaseAccount implements IAccount { ... }",
+            hint: "Sử dụng interface để định nghĩa các hành vi chung và abstract class để triển khai các logic mặc định."
           }
         ],
         projectExplanation: "Xây dựng cấu trúc dữ liệu thực tế cho ngân hàng bằng cách sử dụng các lớp (Classes). Điều này giúp quản lý thông tin khách hàng và tài khoản một cách có hệ thống.",

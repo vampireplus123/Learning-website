@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CodeEditor } from './CodeEditor';
 import { AIReviewPanel } from './AIReviewPanel';
 import { Module } from '../types';
 import { Documentation } from './Documentation';
-import { Play, BookOpen, Code2, LayoutDashboard, Info, Braces, FileText, ExternalLink, GraduationCap, Lock, Loader2, CheckCircle2 } from 'lucide-react';
-import { motion } from 'motion/react';
+import { Play, BookOpen, Code2, LayoutDashboard, Info, Braces, FileText, ExternalLink, GraduationCap, Lock, Loader2, CheckCircle2, Lightbulb } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import Markdown from 'react-markdown';
 import { cn } from '../lib/utils';
 
@@ -35,8 +35,14 @@ export const LearningSpace: React.FC<LearningSpaceProps> = ({
   onSelectLevel,
   isDsaPassed,
 }) => {
+  const [showHint, setShowHint] = useState(false);
   const currentTasks = activeTab === 'editor' ? module.dsaTasks : module.projectTasks;
   const currentTask = currentTasks.find(t => t.level === selectedLevel) || currentTasks[0];
+
+  // Reset hint when task changes
+  React.useEffect(() => {
+    setShowHint(false);
+  }, [selectedLevel, activeTab, module.id]);
 
   return (
     <div className="flex-1 flex flex-col h-screen bg-slate-950">
@@ -230,28 +236,64 @@ export const LearningSpace: React.FC<LearningSpaceProps> = ({
                     </span>
                   </div>
 
-                  <div className="flex bg-slate-950 p-1 rounded-lg border border-slate-800">
-                    {(['easy', 'medium', 'hard'] as const).map((lvl) => (
+                  <div className="flex items-center gap-3">
+                    {currentTask.hint && (
                       <button
-                        key={lvl}
-                        onClick={() => onSelectLevel(lvl)}
+                        onClick={() => setShowHint(!showHint)}
                         className={cn(
-                          "px-3 py-1 text-[10px] font-bold uppercase tracking-tighter rounded-md transition-all",
-                          selectedLevel === lvl 
-                            ? (lvl === 'easy' ? "bg-emerald-500 text-white" : lvl === 'medium' ? "bg-amber-500 text-white" : "bg-red-500 text-white")
-                            : "text-slate-500 hover:text-slate-300"
+                          "flex items-center gap-1.5 px-2 py-1 rounded-md text-[10px] font-bold uppercase transition-all",
+                          showHint 
+                            ? "bg-amber-500/20 text-amber-500 border border-amber-500/30" 
+                            : "bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-700"
                         )}
                       >
-                        {lvl}
+                        <Lightbulb className={cn("w-3 h-3", showHint && "fill-amber-500")} />
+                        {showHint ? 'Hide Hint' : 'Show Hint'}
                       </button>
-                    ))}
+                    )}
+                    <div className="flex bg-slate-950 p-1 rounded-lg border border-slate-800">
+                      {(['easy', 'medium', 'hard'] as const).map((lvl) => (
+                        <button
+                          key={lvl}
+                          onClick={() => onSelectLevel(lvl)}
+                          className={cn(
+                            "px-3 py-1 text-[10px] font-bold uppercase tracking-tighter rounded-md transition-all",
+                            selectedLevel === lvl 
+                              ? (lvl === 'easy' ? "bg-emerald-500 text-white" : lvl === 'medium' ? "bg-amber-500 text-white" : "bg-red-500 text-white")
+                              : "text-slate-500 hover:text-slate-300"
+                          )}
+                        >
+                          {lvl}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <p className="text-sm text-slate-400 italic">
+                <div className="space-y-3">
+                  <p className="text-sm text-slate-400 italic leading-relaxed">
                     {currentTask.description}
                   </p>
+                  
+                  <AnimatePresence>
+                    {showHint && currentTask.hint && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="p-3 bg-amber-500/5 border border-amber-500/20 rounded-lg flex items-start gap-3">
+                          <Lightbulb className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                          <p className="text-xs text-amber-200/70 leading-relaxed">
+                            <span className="font-bold text-amber-500 mr-1">HINT:</span>
+                            {currentTask.hint}
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
                   {currentTask.example && (
                     <div className="p-2 bg-slate-950 rounded border border-slate-800 inline-block">
                       <span className="text-[10px] uppercase text-slate-500 font-bold mr-2">Example:</span>
@@ -348,3 +390,4 @@ export const LearningSpace: React.FC<LearningSpaceProps> = ({
     </div>
   );
 };
+
